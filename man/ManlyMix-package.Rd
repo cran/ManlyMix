@@ -1,45 +1,57 @@
 \name{ManlyMix-package}
 \alias{ManlyMix-package}
-\alias{ManlyMix-package}
 \docType{package}
 \title{
-Model-based clustering with Manly mixture models 
+Finite mixture modeling and model-based clustering based on Manly mixture models.
 }
 \description{
-The package runs finite mixture modeling and model-based clustering using Manly mixture, Manly forward and Manly backward models
+The utility of this package includes finite mixture modeling and model-based clustering based on Manly mixtures as well as forward and backward model selection procedures.
 }
 \details{
 \tabular{ll}{
 Package: \tab ManlyMix\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2014-04-04\cr
+Version: \tab 0.1.2\cr
+Date: \tab 2015-10-03\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab no\cr
 }
-Function 'Manly.EM' runs the EM algorithm for finite mixture models with Manly mixture components.
+Function 'Manly.EM' runs the EM algorithm for Manly mixture models.
 
+Function 'Manly.select' runs forward and backward model selection procedures.
 }
-\author{ Xuwen Zhu, Volodymyr Melnykov
+\author{ Xuwen Zhu and Volodymyr Melnykov.
 
 Maintainer: Xuwen Zhu <xzhu20@crimson.ua.edu>
 }
-\references{
-Zhu, X. and Melnykov, V. Manly transformation in finite mixture modeling, under revision in Computational Statistics & Data Analysis.
 
-}
 \examples{
 
-require(ManlyMix)
-set.seed(777)
+set.seed(123)
 
-X <- as.matrix(faithful)
+K <- 3; p <- 4
+X <- as.matrix(iris[,-5])
+id.true <- rep(1:K, each = 50)
 
-#get initial id from K-means
-id <- kmeans(X,2)$cluster
+# Obtain initial memberships based on the K-means algorithm
+id.km <- kmeans(X, K)$cluster
 
-#run Manly.EM
-la <- matrix(0.1, 2, 2)
-B <- Manly.EM(X, id, la)
+# Run the EM algorithm for a Gaussian mixture model based on K-means solution
+G <- Manly.EM(X, id = id.km)
+id.G <- G$id
+
+# Run FORWARD SELECTION ('silent' is on)
+F <- Manly.select(X, model = G, method = "forward", silent = TRUE)
+
+# Run the EM algorithm for a full Manly mixture model based on Gaussian mixture solution
+la <- matrix(0.1, K, p)
+M <- Manly.EM(X, id = id.G, la = la)
+
+# Run BACKWARD SELECTION ('silent' is off)
+B <- Manly.select(X, model = M, method = "backward")
+
+BICs <- c(G$bic, M$bic, F$bic, B$bic)
+names(BICs) <- c("Gaussian", "Manly", "Forward", "Backward")
+BICs
 
 }

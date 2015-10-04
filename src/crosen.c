@@ -30,8 +30,7 @@
  * An implementation of the Nelder-Mead simplex method.
  */
 
-
-#include <malloc.h>
+#include "array.h"
 #include <math.h>
 
 #define MAX_IT      1000      /* maximum number of iterations */
@@ -74,6 +73,17 @@ double simplex(double (*func)(int, int, double *, int *, double **, double *), i
   /* dynamically allocate arrays */
   
   /* allocate the rows of the arrays */
+
+  /* changed from original */
+
+  MAKE_MATRIX(v, n+1, n);
+  MAKE_VECTOR(f, n+1);
+  MAKE_VECTOR(vr, n);
+  MAKE_VECTOR(ve, n);
+  MAKE_VECTOR(vc, n);
+  MAKE_VECTOR(vm, n);
+  
+  /* original memory allocation
   v =  (double **) malloc ((n+1) * sizeof(double *));
   f =  (double *) malloc ((n+1) * sizeof(double));
   vr = (double *) malloc (n * sizeof(double));
@@ -81,11 +91,11 @@ double simplex(double (*func)(int, int, double *, int *, double **, double *), i
   vc = (double *) malloc (n * sizeof(double));  
   vm = (double *) malloc (n * sizeof(double));  
   
-  /* allocate the columns of the arrays */
+  // allocate the columns of the arrays 
   for (i=0;i<=n;i++) {
     v[i] = (double *) malloc (n * sizeof(double));
   }
-  
+  */
   
   /* create the initial simplex */
   /* assume one of the vertices is 0,0 */
@@ -261,6 +271,18 @@ double simplex(double (*func)(int, int, double *, int *, double **, double *), i
   /*	printf("%d Function Evaluations\n",k);
 	printf("%d Iterations through program\n",itr);*/
 
+
+
+  /* changed from original */
+
+  FREE_MATRIX(v);
+  FREE_VECTOR(f);
+  FREE_VECTOR(vr);
+  FREE_VECTOR(ve);
+  FREE_VECTOR(vc);
+  FREE_VECTOR(vm);
+  
+  /* original memory free
   free(f);
   free(vr);
   free(ve);
@@ -270,5 +292,7 @@ double simplex(double (*func)(int, int, double *, int *, double **, double *), i
     free (v[i]);
   }  
   free(v);
+  */
+
   return min;
 }
