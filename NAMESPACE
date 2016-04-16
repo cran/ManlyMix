@@ -1,5 +1,9 @@
 useDynLib(ManlyMix)
-
+importFrom("graphics", "contour", "points")
+importFrom("stats", "rmultinom", "rnorm")
 export(Manly.EM)
 export(Manly.select)
-
+export(Manly.Kmeans)
+export(Manly.contour)
+export(Manly.var)
+export(Manly.sim)

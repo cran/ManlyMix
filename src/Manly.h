@@ -1,6 +1,6 @@
 #ifndef MANLY_H
 #define MANLY_H
-
+void Manly_transn(int n, double la, double *x, double *y);
 void Manly_trans(int p, double *la, double *x, double *y);
 void Manly_transX(int n, int p, double *la, double **X, double **Y);
 int vec_(int a, double *Res, double *Y);
@@ -21,6 +21,7 @@ void array2to1(int a, int b, double *y, double **x);
 void array1to3(int a, int b, int c, double *y, double ***x);
 void array3to1(int a, int b, int c, double *y, double ***x);
 double simplex(double (*func)(int, int, double *, int *, double **, double *), int n1, int p, int *index, double **X, double *gamma_k, double *start, double EPSILON, double scale);
+
 void EigValDec(int size, double *W, double **A, double (*determinant));
 void Anull(double **X, int ax, int bx);
 void anull(double *x, int p);
@@ -28,6 +29,16 @@ void anulli(int *x, int p);
 void XAXt(double **X, int p, double **A, double **Res);
 void cpy1(double ***a, int k, int nrows, int ncols, double **b);
 void dsyev_(char *JOBZp, char *UPLOp,int *Np, double *A, int *LDAp, double *Wp, double *WORK, int *LWORK, int *INFOp);
+
+
+void E_stepk(int n, int K, int p, double **X, double **Mu, double *sigma2, double **la, double **distance);
+double Qk(int n, int p, double *la, double **X);
+double M_stepk(int n, int p, int K, double *misc_double, double **X, int *id, double **la, double **Mu, double *sigma2);
+void Manly_CEM(int n, int p, int K, double **X, int *id, int max_iter, double *misc_double, double **la, double **Mu, double *sigma2, int *conv);
+void Manly_CEM2(int n, int p, int K, double **X, int max_iter, double *misc_double, double **la, double **Mu, double *sigma2, int *id, int *conv);
+double simplexk(double (*func)(int, int, double *, double **), int n1, int p, double *start, double **X, double EPSILON, double scale);
+void extract(int n, int p, double **X, int *index, double **Y);
+
 
 /* WCC: "libEVD.c" and "libEVD_LAPACK.c" */
 #ifndef __HAVE_R_

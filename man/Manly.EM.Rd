@@ -21,7 +21,7 @@ tol = 1e-5, max.iter = 1000)
   \item{max.iter }{ maximum number of iterations}
 }
 \details{
-Runs the EM algorith for a Manly mixture model for a provided dataset. Manly mixture model assumes that a multivariate Manly transformation applied to each component allows to reach near-normality. 
+Runs the EM algorithm for a Manly mixture model for a provided dataset. Manly mixture model assumes that a multivariate Manly transformation applied to each component allows to reach near-normality. 
 A user has a choice to specify either initial id vector 'id' and transformation parameters 'la' or initial mode parameters 'la', 'tau', 'Mu', and 'S'. In the case when transformation parameters are not provided, the function runs the EM algorithm without any transformations, i.e., it is equivalent to the EM algorithm for a Gaussian mixtuire model. If some transformation parameters have to be excluded from the consideration, in the corresponding positions of matrix 'la', the user has to specify value 0.
 Notation: n - sample size, p - dimensionality of the dataset X, K - number of mixture components.
 }

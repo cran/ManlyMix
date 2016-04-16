@@ -32,14 +32,14 @@
 
 #include "array.h"
 #include <math.h>
-
+#include "Manly.h"
 #define MAX_IT      1000      /* maximum number of iterations */
 #define ALPHA       1.0       /* reflection coefficient */
 #define BETA        0.5       /* contraction coefficient */
 #define GAMMA       2.0       /* expansion coefficient */
 
 
-double simplex(double (*func)(int, int, double *, int *, double **, double *), int n1, int p, int *index, double **X, double *gamma_k, double *start, double EPSILON, double scale)
+double simplexk(double (*func)(int, int, double *, double **), int n1, int p, double *start, double **X, double EPSILON, double scale)
 {
   
   int vs;        	/* vertex with smallest value */
@@ -63,13 +63,8 @@ double simplex(double (*func)(int, int, double *, int *, double **, double *), i
   double min;
   
   double fsum,favg,s,cent;
-  n = 0;
-  for(j=0;j<p;j++){
-    if(index[j]==1){
-	n +=1;
-    }
-  }
   
+  n = p;
   /* dynamically allocate arrays */
   
   /* allocate the rows of the arrays */
@@ -120,7 +115,7 @@ double simplex(double (*func)(int, int, double *, int *, double **, double *), i
   
   /* find the initial function values */
   for (j=0;j<=n;j++) {
-    f[j] = func(n1, p, v[j], index, X, gamma_k);
+    f[j] = func(n1, p, v[j], X);
   }
   
   k = n+1;
@@ -167,7 +162,7 @@ double simplex(double (*func)(int, int, double *, int *, double **, double *), i
     for (j=0;j<=n-1;j++) {
       vr[j] = (1+ALPHA)*vm[j] - ALPHA*v[vg][j];
     }
-    fr = func(n1, p, vr, index, X, gamma_k);
+    fr = func(n1, p, vr, X);
     k++;
     
     /* added <= */
@@ -184,7 +179,7 @@ double simplex(double (*func)(int, int, double *, int *, double **, double *), i
       for (j=0;j<=n-1;j++) {
 	ve[j] = GAMMA*vr[j] + (1-GAMMA)*vm[j];
       }
-      fe = func(n1, p, ve, index, X, gamma_k);
+      fe = func(n1, p, ve, X);
       k++;
       
    
@@ -207,7 +202,7 @@ double simplex(double (*func)(int, int, double *, int *, double **, double *), i
       for (j=0;j<=n-1;j++) {
 	vc[j] = BETA*v[vg][j] + (1-BETA)*vm[j];
       }
-      fc = func(n1, p, vc, index, X, gamma_k);
+      fc = func(n1, p, vc, X);
       k++;
       if (fc < f[vg]) {
 	for (j=0;j<=n-1;j++) {
@@ -228,9 +223,9 @@ double simplex(double (*func)(int, int, double *, int *, double **, double *), i
 	    }
 	  }
 	}
-	f[vg] = func(n1, p, v[vg], index, X, gamma_k);
+	f[vg] = func(n1, p, v[vg], X);
 	k++;
-	f[vh] = func(n1, p, v[vh], index, X, gamma_k);
+	f[vh] = func(n1, p, v[vh], X);
 	k++;
 	
 	
@@ -266,7 +261,7 @@ double simplex(double (*func)(int, int, double *, int *, double **, double *), i
   for (j=0;j<n;j++) {
     start[j] = v[vs][j];
   }
-  min=func(n1, p, v[vs], index, X, gamma_k);
+  min = func(n1, p, v[vs], X);
   k++;
   /*	printf("%d Function Evaluations\n",k);
 	printf("%d Iterations through program\n",itr);*/

@@ -13,13 +13,29 @@
 	#include <Rmath.h>
 #endif
 
+// Manly transformation for a column
+void Manly_transn(int n, double la, double *x, double *y){
+  int i;
+  if(fabs(la)<1e-12){
+    for(i=0; i<n; i++){
+       y[i] = x[i];
+    }
+  }
+  
+  else{
+    for(i=0; i<n; i++) {
+      y[i] = (exp(x[i] * la)-1) / la;
+    }
+  }
 
-// Manly transformation for a vector
+}
+
+// Manly transformation for an observation
 void Manly_trans(int p, double *la, double *x, double *y){
   int j;
 
   for(j=0; j<p; j++) {
-    if(la[j]==0){
+    if(fabs(la[j])<1e-12){
       y[j] = x[j];
     } else{
       y[j] = (exp(x[j] * la[j])-1) / la[j];
@@ -39,7 +55,7 @@ void Manly_transX(int n, int p, double *la, double **X, double **Y){
   int i, j;
 
   for (j=0; j<p; j++){
-    if (la[j] == 0){
+    if (fabs(la[j])<1e-12){
       for(i=0; i<n; i++) {
 	Y[i][j] = X[i][j];
       }

@@ -49,12 +49,12 @@ Manly.EM <- function(X, id = NULL, la = NULL, tau = NULL, Mu = NULL, S = NULL, t
 			la <- matrix(0.0, K, p)
 		}
 
-		equal.K <- c(dim(Mu)[1], dim(S)[3])
+		equal.K <- c(dim(la)[1], dim(Mu)[1], dim(S)[3])
 		equal.p <- c(dim(la)[2], dim(Mu)[2], dim(S)[1], dim(S)[2])
 
 		if (K < 1) stop("Wrong number of mixture components K...\n")
-		if ((K != equal.K[1]) || (K != equal.K[2])) stop("Inconsistent number of mixture components K...\n")
-		if ((p != equal.p[1]) || (p != equal.p[2]) || (p != equal.p[3]) || (p != equal.p[4])) stop("Inconsistent number of dimensionaltiy p...\n")
+		if ((K != equal.K[1]) || (K != equal.K[2]) || (K != equal.K[3])) stop("Inconsistent number of mixture components K...\n")
+		if ((p != equal.p[1]) || (p != equal.p[2]) || (p != equal.p[3]) || (p != equal.p[4])) stop("Inconsistent number of dimensionality p...\n")
 
 
 		x1 <- as.vector(t(X))
@@ -78,11 +78,14 @@ Manly.EM <- function(X, id = NULL, la = NULL, tau = NULL, Mu = NULL, S = NULL, t
 	M <- K - 1 + 2 * K * p + K * p * (p + 1) / 2 - sum(ind)
 	BIC <- Manly.bic(result$ll[1], n, M)
 
+	
 	ret <- list(la = matrix(result$la1, nrow=K, byrow=TRUE), tau = result$tau, Mu = matrix(result$Mu1, nrow = K, byrow = TRUE), S = array(result$S1, dim = c(p, p, K)), gamma = matrix(result$gamma1, nrow = n, byrow = TRUE), id = result$id, ll = result$ll[1], bic = BIC, iter = result$conv[1], flag = result$conv[2])
 
 	class(ret) <- "ManlyMix"
-	
-	
+	if(result$conv[2] == 1) {
+		warning("The EM algorithm does not converge...\n")
+		ret <- list(la = NULL, tau = NULL, Mu = NULL, S = NULL, gamma = NULL, id = NULL, ll = NULL, bic = NULL, iter = result$conv[1], flag = result$conv[2])
+	}	
 	return(ret)
 
 
@@ -93,3 +96,8 @@ Manly.EM <- function(X, id = NULL, la = NULL, tau = NULL, Mu = NULL, S = NULL, t
 Manly.bic <- function(logl, n, M){
 	return(-2 * logl + M * log(n))
 }
+
+
+
+
+

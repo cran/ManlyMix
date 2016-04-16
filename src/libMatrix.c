@@ -5,7 +5,6 @@
 #include "Manly.h"
 
 
-
 /* Multiplies matrices a and b and puts the result in c which should be
  pre-allocated */
 
@@ -702,6 +701,32 @@ int Factorial(int a){
     }
     
     return res;
+}
+
+
+
+
+/* extract rows in matrix using index */
+
+void extract(int n, int p, double **X, int *index, double **Y){
+     
+    int i,j,k;
+
+    k = 0;
+
+    for (i=0; i<n; i++){
+        
+	if(index[i] != 0){
+	
+	    for (j=0; j<p; j++){  
+  
+	        Y[k][j] = X[i][j];
+
+
+	    }
+	    k += 1;
+	}
+    }
 }
 
 

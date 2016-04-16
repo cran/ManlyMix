@@ -1,0 +1,13 @@
+EMalgorithm1		ManlyMix	EM algorithm with initial membership vector
+EMalgorithm2		ManlyMix	EM algorithm with initial parameters
+ManlyKmeans1		ManlyMix	Manly K-means algorithm with initial membership vector
+ManlyKmeans2		ManlyMix	Manly K-means algorithm with initial parameters
+BackwardSelection	ManlyMix	Backward model selection
+ForwardSelection	ManlyMix	Forward model selection
+ContourPlot		ManlyMix	Constructing contour plot
+DataSimulation		ManlyMix	Simulate Manly mixture data
+VarAssess		ManlyMix	Variability assessment
+utility			ManlyMix	Illustrative example
+ais			ManlyMix	Application to ais dataset
+seeds			ManlyMix 	Application to seeds dataset
+bankruptcy		ManlyMix	Application to bankruptcy dataset

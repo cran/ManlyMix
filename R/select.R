@@ -15,17 +15,34 @@ forward <- function(X, reduced, tol, max.iter){
 	tick <- 0
 	for(i in (1:length(ind))[ind]){
 		tick <- tick + 1
-		la <- la.reduced
-		la[i] <- 0.01
-		repeat{			
+		la <- la.reduced			for(step in seq(0.01, 0.1, 0.01)){
+
+			la[i] <- step
+
 			res1 <- try(forward <- Manly.EM(X, id = reduced$id, la = la, tol = tol, max.iter = max.iter))
-			if(!inherits(res1, "try-error")){
-				break
-			}
-			else {la[i] <- la[i] + 0.01}
+			if(!inherits(res1, "try-error")){
+
+				if(!is.null(forward$ll)){
+					break				}
+
+			}
+			else {
+
+				la[i] <- -step
+
+				res1 <- try(forward <- Manly.EM(X, id = reduced$id, la = la, tol = tol, max.iter = max.iter))
+				if(!inherits(res1, "try-error")){
+
+					if(!is.null(forward$ll)){
+						break					}
+
+				}
+
+			}
+
 		}
 
-		if(inherits(res1, "try-error") || (is.na(forward$ll))){
+		if(inherits(res1, "try-error") || (is.null(forward$ll))){
 			forward.list[[tick]] <- NULL
 			forward.bic[tick] <- Inf
 		}
@@ -65,7 +82,7 @@ backward <- function(X, full, tol, max.iter){
 		la[i] <- 0.0
 					
 		res1 <- try(reduced <- Manly.EM(X, id = full$id, la = la, tol = tol, max.iter = max.iter))
-		if(inherits(res1, "try-error") || (is.na(reduced$ll))){
+		if(inherits(res1, "try-error") || (is.null(reduced$ll))){
 			reduced.list[[tick]] <- NULL
 			reduced.bic[tick] <- Inf
 		}
