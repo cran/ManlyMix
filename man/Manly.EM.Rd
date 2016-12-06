@@ -39,6 +39,7 @@ Notation: n - sample size, p - dimensionality of the dataset X, K - number of mi
 }
 
 \seealso{Manly.select}
+
 \examples{
 
 set.seed(123)
@@ -64,6 +65,7 @@ id.Manly <- B$id
 table(id.true, id.Manly)
 
 }
+
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ Manly mixture }

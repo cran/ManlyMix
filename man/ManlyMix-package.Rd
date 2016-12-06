@@ -11,12 +11,14 @@ The utility of this package includes finite mixture modeling and model-based clu
 \tabular{ll}{
 Package: \tab ManlyMix\cr
 Type: \tab Package\cr
-Version: \tab 0.1.2\cr
-Date: \tab 2015-10-03\cr
+Version: \tab 0.1.7\cr
+Date: \tab 2016-12-01\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab no\cr
 }
-Function 'Manly.sim' simulates Manly mixture components.
+Function 'Manly.sim' simulates Manly mixture datasets.
+
+Function 'Manly.overlap' estimates the pairwise overlaps for a Manly mixture.
 
 Function 'Manly.EM' runs the EM algorithm for Manly mixture models.
 
@@ -30,7 +32,15 @@ Function 'Manly.contour' produces the contour plot of Manly mixture.
 }
 \author{ Xuwen Zhu and Volodymyr Melnykov.
 
-Maintainer: Xuwen Zhu <xzhu20@crimson.ua.edu>
+Maintainer: Xuwen Zhu <xuwen.zhu@louisville.edu>
+}
+\references{
+Zhu, X. and Melnykov, V. (2016) ``Manly Transformation in Finite Mixture Modeling'', \emph{Journal of Computational Statistics and Data Analysis}, doi:10.1016/j.csda.2016.01.015.
+
+Maitra, R. and Melnykov, V. (2010) ``Simulating data to study performance of finite mixture modeling and clustering algorithms'', \emph{Journal of Computational and Graphical Statistics}, 2:19, 354-376.
+
+Melnykov, V., Chen, W.-C., and Maitra, R. (2012) ``MixSim: An R Package for Simulating Data to Study Performance of Clustering Algorithms'', \emph{Journal of Statistical Software}, 51:12, 1-25.
+
 }
 
 \examples{

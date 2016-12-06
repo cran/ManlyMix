@@ -36,9 +36,7 @@ Australian Institute of Sport, courtesy of Richard Telford and Ross Cunningham.
 book by  Cook and Weisberg (1994).}
 
 \references{
-  Cook and Weisberg (1994),
-  \emph{An Introduction to Regression Graphics}.                   
-  John Wiley & Sons, New York.
+  Cook and Weisberg (1994) \emph{An Introduction to Regression Graphics}, John Wiley & Sons, New York.
 }
 
 \examples{

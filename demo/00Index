@@ -6,6 +6,7 @@ BackwardSelection	ManlyMix	Backward model selection
 ForwardSelection	ManlyMix	Forward model selection
 ContourPlot		ManlyMix	Constructing contour plot
 DataSimulation		ManlyMix	Simulate Manly mixture data
+Overlap			ManlyMix	Estimates average overlap for Manly mixture
 VarAssess		ManlyMix	Variability assessment
 utility			ManlyMix	Illustrative example
 ais			ManlyMix	Application to ais dataset

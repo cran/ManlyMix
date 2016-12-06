@@ -27,6 +27,7 @@ Provides the contour plot for the fitted data by Manly mixture model. This plot 
 }
 
 \seealso{Manly.EM}
+
 \examples{
 
 set.seed(123)

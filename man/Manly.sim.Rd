@@ -1,7 +1,7 @@
 \name{Manly.sim}
 \alias{Manly.sim}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{ Simulates Manly mixture components}
+\title{ Simulates Manly mixture dataset}
 \description{
 Simulates Manly mixture dataset given the mixture parameters and sample size.
 }
@@ -17,14 +17,14 @@ Manly.sim(n, la, tau, Mu, S)
   \item{S }{ array of covariance matrices (p x p x K)}
 }
 \details{
-Simulates a Manly mixture dataset. Manly mixture components are simulated from back-transforming Gaussian components using user-specified transformation parameters 'la'. 
+Simulates a Manly mixture dataset. Manly mixture data points are computed from back-transforming Gaussian distributed data points using user-specified transformation parameters 'la'. 
 }
 \value{
  \item{X }{ the simulated Manly mixture dataset}
  \item{id }{ the simulated membership of the data}
 }
 
-\seealso{Manly.EM}
+
 \examples{
 set.seed(123)
 

@@ -1,3 +1,4 @@
+
 Gmat <- function(p){
 
     M <- p * (p + 1) / 2
@@ -246,3 +247,79 @@ Manly.sim <- function(n, la, tau, Mu, S){
 
 
 
+
+
+
+
+
+
+
+
+
+prop.M <- function(Z, tau1, tau2, mu1, mu2, S1, S2, la1, la2, sqr.S1, inv.S1, inv.S2, det.S1, det.S2){
+	Yk <- sqr.S1 %*% Z + mu1
+	index <- la1!=0
+
+	X <- Yk
+	if(sum(index)>0){
+		X[index] <- log(la1[index] * Yk[index] + 1) / la1[index]
+	}
+	index2 <- la2!=0	
+	Ykprime <- X
+	if(sum(index2)>0){
+		Ykprime[index2] <- (exp(la2[index2] * X[index2]) - 1) / la2[index2]
+	}
+		
+	a <- 1 / 2 * t(Ykprime - mu2) %*% inv.S2 %*% (Ykprime - mu2) - t(la2) %*% X -
+	1 / 2 * t(Yk - mu1) %*% inv.S1 %*% (Yk - mu1) + t(la1) %*% X
+	b <- log(tau2 / tau1 * det.S2^(-1/2) / det.S1^(-1/2))
+	re <- ifelse(a < b, 1, 0)
+	return(re)
+}
+
+
+overlap.M2 <- function(N, tau, Mu, S, la){
+	p <- dim(Mu)[2]
+	simu <- matrix(rnorm(N * p), N, p)
+	inv.S1 <- solve(S[,,1])
+	inv.S2 <- solve(S[,,2])
+	det.S1 <- det(S[,,1])
+	det.S2 <- det(S[,,2])
+	a.eig <- eigen(S[,,1])
+	a.sqrt <- a.eig$vectors %*% diag(sqrt(a.eig$values)) %*% solve(a.eig$vectors)
+
+	b.eig <- eigen(S[,,2])
+	b.sqrt <- b.eig$vectors %*% diag(sqrt(b.eig$values)) %*% solve(b.eig$vectors)
+
+	Omega12 <- sum(apply(simu, 1, prop.M, tau1 = tau[1], tau2 = tau[2], mu1 = Mu[1,], mu2 = 
+	Mu[2,], S1 = S[,,1], S2 = S[,,2], la1 = la[1,], la2 = la[2,], sqr.S1 = 
+	a.sqrt, inv.S1 = inv.S1, inv.S2 = inv.S2, det.S1 = det.S1, det.S2 = det.S2)) / N
+
+	Omega21 <- sum(apply(simu, 1, prop.M, tau1 = tau[2], tau2 = tau[1], mu1 = Mu[2,], mu2 = 
+	Mu[1,], S1 = S[,,2], S2 = S[,,1], la1 = la[2,], la2 = la[1,], sqr.S1 = 
+	b.sqrt, inv.S1 = inv.S2, inv.S2 = inv.S1, det.S1 = det.S2, det.S2 = det.S1)) / N
+	return(list(Omega12 = Omega12, Omega21 = Omega21))
+}
+
+
+Manly.overlap <- function(tau, Mu, S, la, N = 1000){
+
+	p <- length(tau)
+	K <- dim(Mu)[1]
+	mat <- combn(1:K, 2)
+	OmegaMap <- matrix(1, K, K)
+	Omega <- rep(NA, dim(mat)[2])
+
+
+	for(i in 1:dim(mat)[2]){
+		whichtwo <- mat[,i]
+		result <- overlap.M2(N, tau = tau[whichtwo], Mu = Mu[whichtwo,], S = S[,,whichtwo], la = la[whichtwo,])
+		OmegaMap[whichtwo[1], whichtwo[2]] <- result$Omega12
+		OmegaMap[whichtwo[2], whichtwo[1]] <- result$Omega21
+		Omega[i] <- result$Omega12 + result$Omega21
+	}
+
+	BarOmega <- mean(Omega)
+	MaxOmega <- max(Omega)
+	return(list(OmegaMap = OmegaMap, BarOmega = BarOmega, MaxOmega = MaxOmega))
+}

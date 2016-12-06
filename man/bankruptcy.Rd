@@ -17,7 +17,7 @@
 
 }}
 \references{
-Altman E.I. (1968). Financial ratios, discriminant analysis and the prediction of corporate bankruptcy. \emph{J Finance} \bold{23}(4): 589-609
+Altman E.I. (1968) Financial ratios, discriminant analysis and the prediction of corporate bankruptcy, \emph{J Finance} \bold{23}(4): 589-609
 }
 
 \examples{

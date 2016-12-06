@@ -18,6 +18,7 @@ Returns the estimated variance-covariance matrix for model parameter estimates.
 }
 
 \seealso{Manly.EM}
+
 \examples{
 
 set.seed(123)
