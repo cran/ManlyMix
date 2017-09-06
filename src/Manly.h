@@ -39,7 +39,7 @@ void Manly_CEM2(int n, int p, int K, double **X, int max_iter, double *misc_doub
 double simplexk(double (*func)(int, int, double *, double **), int n1, int p, double *start, double **X, double EPSILON, double scale);
 void extract(int n, int p, double **X, int *index, double **Y);
 
-
+void proAgree(int n, int K1, int K2, int *id1, int *id2, double *maxPro, int *combination);
 /* WCC: "libEVD.c" and "libEVD_LAPACK.c" */
 #ifndef __HAVE_R_
 	void cephes_symmeigens_down(int p, double *eval, double **A, double (*determinant));

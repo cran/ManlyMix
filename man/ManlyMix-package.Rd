@@ -24,11 +24,13 @@ Function 'Manly.EM' runs the EM algorithm for Manly mixture models.
 
 Function 'Manly.select' runs forward and backward model selection procedures.
 
-Function 'Manly.CEM' runs k-means model with Manly transformation.
+Function 'Manly.Kmeans' runs k-means model with Manly transformation.
 
 Function 'Manly.var' produces the variance-covariance matrix of the parameter estimates from Manly mixture model.
 
-Function 'Manly.contour' produces the contour plot of Manly mixture.
+Function 'Manly.plot' produces the density plot or contour plot of Manly mixture.
+
+Function 'Manly.model' incorporates all Manly mixture related functionality.
 }
 \author{ Xuwen Zhu and Volodymyr Melnykov.
 

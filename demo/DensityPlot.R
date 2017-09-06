@@ -11,5 +11,5 @@ id.km <- kmeans(X, K)$cluster
 la <- matrix(0.1, K, p)
 B <- Manly.EM(X, id.km, la)
 
-Manly.plot(X, model = B, var1 = 1, var2 = 2, x.mar = 1, y.mar = 2, xaxs="i", yaxs="i", xaxt="n", yaxt="n", xlab="", ylab = "", nlevels = 10, drawlabels = FALSE, lwd = 3.2, col = "lightgrey", pch = 19)
+Manly.plot(X, model = B, var1 = 1, x.mar = 1, xaxs="i", xaxt="n", xlab="", main = "")
 

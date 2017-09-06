@@ -13,6 +13,174 @@
 	#include <Rmath.h>
 #endif
 
+
+void proAgree(int n, int K1, int K2, int *id1, int *id2, double *maxPro, int *combination){
+
+	int sch, i, j, v, w, finish, flag, ind, v1;
+	int size, h, idsmall, trclass;
+	double curr;
+
+    	int *cn;
+	double **pat;
+
+	if (K1 < K2){
+		size = K1;
+		idsmall = 1;
+	} else {
+		size = K2;
+		idsmall = 2;
+	}
+		
+	curr = 0.0;
+	
+	sch = 0;
+	i = 0;
+	j = -1;
+	flag = 0;
+	finish = 0;
+	ind = 0;
+
+	MAKE_MATRIX(pat, size, size);
+	for (v=0; v<size; v++){
+		for (w=0; w<size; w++){
+			pat[v][w] = 0;
+		}
+	}
+
+	MAKE_VECTOR(cn,size);
+	for (v=0; v<size; v++){
+		cn[v] = 0;
+	}
+  
+	while (finish == 0){
+    
+		if (j != (size-1)){
+			j = j+1;
+		} else {
+			if (flag == 1){
+				j = 0;
+				i = i + 1;
+				flag = 0;
+			}
+		}
+    
+		if (pat[i][j] == 0){
+			for (v=0; v<size; v++){
+				pat[i][v] = 1;
+				pat[v][j] = 1;
+			}
+      
+			sch = sch + 1;
+			cn[sch-1] = j;
+			flag = 1;
+		}
+
+		if ((sch == size) & (flag == 1)){
+      
+//			for (v=0; v<size; v++){
+//				printf(" %i", cn[v]);
+//			}
+//			printf(" \n");
+
+//			####################################
+
+			trclass = 0;
+
+			if (idsmall == 1){
+				for (h=0; h<n; h++){				
+					if (cn[id1[h]] == id2[h]) trclass++;
+				}
+			} else {
+				for (h=0; h<n; h++){				
+					if (cn[id2[h]] == id1[h]) trclass++;
+				}
+			}
+
+			curr = (double)trclass / n;
+
+			if ((*maxPro) < curr) {
+	
+				(*maxPro) = curr;
+				anulli(combination, size);
+				for (v1=0; v1<size; v1++){
+					combination[v1] = cn[v1];
+				}
+				
+			}
+			
+//			printf("    %lf\n", curr);
+
+//			####################################
+
+			ind++;
+			flag = 0;
+			sch = sch - 1;
+			i = i - 1;
+			j = cn[sch-1];
+			sch = sch - 1;
+      
+			for (v=0; v<size; v++){
+				for (w=0; w<size; w++){
+					pat[v][w] = 0;
+				}
+			}
+
+			for (v=0; v<sch; v++){
+				for (w=0; w<size; w++){
+					pat[v][w] = 1;
+					pat[w][cn[v]] = 1;
+				}
+			}    
+      
+		}
+
+
+
+		if ((j == (size-1)) & (flag == 0)){
+			i = i - 1;
+			
+			sch = sch - 1;
+
+			if (sch >= 0){
+
+				j = cn[sch];
+
+				for (v=0; v<size; v++){
+					for (w=0; w<size; w++){
+						pat[v][w] = 0;
+					}
+				}
+
+				if (sch > 0){
+					for (v=0; v<sch; v++){
+						for (w=0; w<size; w++){
+							pat[v][w] = 1;
+							pat[w][cn[v]] = 1;
+						}
+					}    
+				}
+
+			}
+
+			if (i >= 0){
+				pat[i][j] = 1;
+			}
+
+		}
+
+		if (sch == -1){
+			finish = 1;
+		}
+
+	}
+
+	FREE_MATRIX(pat);
+	FREE_VECTOR(cn);
+
+}
+
+
+
 // Manly transformation for a column
 void Manly_transn(int n, double la, double *x, double *y){
   int i;

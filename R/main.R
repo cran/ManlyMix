@@ -1,4 +1,150 @@
+options(warn=-1)
+Manly.model <- function(X, K = 1:5, Gaussian = FALSE, initial = "k-means", nstart = 100, method = "ward.D", short.iter = 5, select = "none", silent = TRUE, plot = FALSE, var1 = NULL, var2 = NULL, VarAssess = FALSE, overlap = FALSE, N = 1000, tol = 1e-5, max.iter = 1000, ...){
+	if(!is.matrix(X)){
+		if(is.vector(X)){
+			n <- length(X)
+			X <- matrix(X, n, 1)
+		}
+	}
+	VAR <- NULL
+	n <- dim(X)[1]
+	p <- dim(X)[2]
+	if(select == "forward"){Gaussian <- TRUE}
+	if(select == "backward"){Gaussian <- FALSE}
+
+	if(initial == "k-means"){
+		bic <- Inf
+		M <- NULL
+		for(k1 in K){
+			id.km <- kmeans(X, centers = k1, nstart = nstart)$cluster
+			if(Gaussian){
+				res1 <- try(temp <- Manly.EM(X, id = id.km, tol = tol, max.iter = max.iter))
+				if(!inherits(res1, "try-error")){
+					if(temp$bic < bic){
+						M <- temp
+						bic <- M$bic
+					}
+				}
+			}
+			else{
+				res1 <- try(temp <- Manly.EM(X, id = id.km, la = matrix(0.1, k1, p), tol = tol, max.iter = max.iter))
+				if(!inherits(res1, "try-error")){
+					if(temp$bic < bic){
+						M <- temp
+						bic <- M$bic
+					}
+				}
+
+
+			}
+		}
+	}
+	else if(initial == "hierarchical"){
+
+		bic <- Inf
+		M <- NULL
+		for(k1 in K){
+			H <- hclust(dist(X), method = method)
+			id.hier <- cutree(H, k1)
+			if(Gaussian){
+				res1 <- try(temp <- Manly.EM(X, id = id.hier, tol = tol, max.iter = max.iter))
+				if(!inherits(res1, "try-error")){
+					if(temp$bic < bic){
+						M <- temp
+						bic <- M$bic
+					}
+				}
+			}
+			else{
+				res1 <- try(temp <- Manly.EM(X, id = id.hier, la = matrix(0.1, k1, p), tol = tol, max.iter = max.iter))
+				if(!inherits(res1, "try-error")){
+					if(temp$bic < bic){
+						M <- temp
+						bic <- M$bic
+					}
+				}
+			}
+		}
+
+
+	}
+	else if(initial == "emEM"){
+		options(warn=-1)
+		bic <- Inf
+		M <- NULL
+		for(k1 in K){
+			iter <- 0
+			ll <- -Inf
+			M1 <- NULL
+			repeat{
+				iter <- iter + 1
+				rs <- sample(1:n, k1)
+				
+				id.km <- kmeans(X, centers = matrix(X[rs,], k1, p), iter.max = 1)$cluster
+				if(Gaussian){
+					res1 <- try(temp <- Manly.EM(X, id = id.km, tol = tol, max.iter = short.iter))
+				}
+				else{
+
+					res1 <- try(temp <- Manly.EM(X, id = id.km, la = matrix(0.1, k1, p), tol = tol, max.iter = max.iter))
+
+				}
+				if(!inherits(res1, "try-error")){
+					if(temp$ll > ll){
+						M1 <- temp
+						ll <- M1$ll
+					}
+				}	
+	
+				if(iter == nstart){break}
+			}
+			res1 <- try(temp <- Manly.EM(X, tau = M1$tau, Mu = M1$Mu, S = M1$S, la = M1$la, tol = tol, max.iter = max.iter))
+			if(!inherits(res1, "try-error")){
+				if(temp$bic < bic){
+					M <- temp
+					bic <- M$bic
+					
+				}
+			}
+			
+		}
+
+	}
+	if(!Gaussian){
+		if(VarAssess){
+			VAR <- Manly.var(X, model = M)
+		}
+	}
+
+	if(select == "forward"){
+
+		M <- Manly.select(X, model = M, method = "forward", tol = tol, max.iter = max.iter, silent = silent)
+	}
+	else if(select == "backward"){
+
+		M <- Manly.select(X, model = M, method = "backward", tol = tol, max.iter = max.iter, silent = silent)
+	}
+	O <- NULL
+	if(overlap){
+
+		O <- Manly.overlap(M$tau, M$Mu, M$S, M$la, N = N)
+
+	}
+	if(plot){
+
+		Manly.plot(X, var1 = var1, var2 = var2, model = M, ...)
+
+	}
+	return(list(Model = M, VarAssess = VAR, Overlap = O))
+
+}
 Manly.EM <- function(X, id = NULL, la = NULL, tau = NULL, Mu = NULL, S = NULL, tol = 1e-5, max.iter = 1000){
+	if(!is.matrix(X)){
+		if(is.vector(X)){
+			n <- length(X)
+			X <- matrix(X, n, 1)
+		}
+	}
 
 
 	if (tol <= 0) stop("Wrong value of tol...\n")
@@ -84,7 +230,6 @@ Manly.EM <- function(X, id = NULL, la = NULL, tau = NULL, Mu = NULL, S = NULL, t
 	class(ret) <- "ManlyMix"
 	if(result$conv[2] == 1) {
 		warning("The EM algorithm does not converge...\n")
-		ret <- list(la = NULL, tau = NULL, Mu = NULL, S = NULL, gamma = NULL, id = NULL, ll = NULL, bic = NULL, iter = result$conv[1], flag = result$conv[2])
 	}	
 	return(ret)
 

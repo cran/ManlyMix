@@ -7,6 +7,7 @@ Runs the CEM algorithm for k-means clustering with specified initial membership 
 }
 \usage{
 Manly.Kmeans(X, id = NULL, la = NULL, Mu = NULL, S = NULL, 
+initial = "k-means", K = NULL, nstart = 100, method = "ward.D", 
 tol = 1e-5, max.iter = 1000)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -16,6 +17,10 @@ tol = 1e-5, max.iter = 1000)
   \item{la }{ initial transformation parameters (K x p)}
   \item{Mu }{ initial matrix of mean vectors (K x p)}
   \item{S }{ initial vector of variances (K)}
+   \item{initial }{ initialization strategy of the EM algorithm ("k-means" - partition obtained by k-means clustering, "hierarchical" - partition obtained by hierarchical clustering)}
+  \item{K }{ number of clusters for the k-means initialization}
+  \item{nstart }{ number of random starts for the k-means initialization}
+  \item{method }{ linkage method for the hierarchical initialization}
   \item{tol }{ tolerance level}
   \item{max.iter }{ maximum number of iterations}
 }
@@ -50,7 +55,7 @@ la <- matrix(0.1, K, p)
 B <- Manly.Kmeans(X, id.km, la)
 id.Manly <- B$id
 
-table(id.true, id.Manly)
+ClassAgree(id.Manly, id.true)
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

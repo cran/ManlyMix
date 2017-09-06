@@ -1,8 +1,13 @@
 
 
-Manly.Kmeans <- function(X, id = NULL, la = NULL, Mu = NULL, S = NULL, tol = 1e-5, max.iter = 1000){
+Manly.Kmeans <- function(X, id = NULL, la = NULL, Mu = NULL, S = NULL, initial = "k-means", K = NULL, nstart = 100, method = "ward.D", tol = 1e-5, max.iter = 1000){
 
-
+	if(!is.matrix(X)){
+		if(is.vector(X)){
+			n <- length(X)
+			X <- matrix(X, n, 1)
+		}
+	}
 	if (tol <= 0) stop("Wrong value of tol...\n")
 	if (max.iter < 1) stop("Wrong number of iterations iter...\n")
 
@@ -16,9 +21,54 @@ Manly.Kmeans <- function(X, id = NULL, la = NULL, Mu = NULL, S = NULL, tol = 1e-
 	if(p < 1) stop("Wrong dimensionality p...\n")
 
 
+	if(is.null(id) && (is.null(Mu) || is.null(S))) {
+		
+		if(initial == "k-means"){
+			
+			id.km <- kmeans(X, centers = K, nstart = nstart)$cluster
+			K <- max(id.km)	
+			la <- matrix(0.1, K, p)
 
-	if(is.null(id) && (is.null(Mu) || is.null(S))) stop("Must provide one initialization method...\n")
-	if(!is.null(id)){
+			x1 <- as.vector(t(X))
+			la1 <- as.vector(t(la))
+
+			ll <- rep(0, 3)
+			misc_int <- c(p, n, K, max.iter)
+			misc_double <- c(tol, 0.0, 0.0)
+			conv <- rep(0, 2)
+
+			Mu1 <- rep(0, K*p)
+			S1 <- rep(0, K)
+
+
+			result <- .C("run_Manlyk", x1 = as.double(x1), id = as.integer(id.km), misc_int = as.integer(misc_int), misc_double = as.double(misc_double), la1 = as.double(la1), Mu1 = as.double(Mu1), S1 = as.double(S1), conv = as.integer(conv), PACKAGE = "ManlyMix")
+	
+		}
+		else if(initial == "hierarchical"){
+
+			H <- hclust(dist(X), method = method)
+			id.hier <- cutree(H, K)	
+			la <- matrix(0.1, K, p)
+
+			x1 <- as.vector(t(X))
+			la1 <- as.vector(t(la))
+
+			ll <- rep(0, 3)
+			misc_int <- c(p, n, K, max.iter)
+			misc_double <- c(tol, 0.0, 0.0)
+			conv <- rep(0, 2)
+
+			Mu1 <- rep(0, K*p)
+			S1 <- rep(0, K)
+
+
+			result <- .C("run_Manlyk", x1 = as.double(x1), id = as.integer(id.hier), misc_int = as.integer(misc_int), misc_double = as.double(misc_double), la1 = as.double(la1), Mu1 = as.double(Mu1), S1 = as.double(S1), conv = as.integer(conv), PACKAGE = "ManlyMix")
+
+		}
+
+
+	}
+	else if(!is.null(id)){
 
 
 		K <- max(id)	

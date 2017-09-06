@@ -33,8 +33,44 @@ Gmat <- function(p){
     return(G)
 
 }
+Manly.plot <- function(X, var1 = NULL, var2 = NULL, model = NULL, x.slice = 100, y.slice = 100, x.mar = 1, y.mar = 1, col = "lightgrey", ...){
+
+	if(is.null(var2)){
+		if(is.null(var1)){
+			stop("Please specify which variable(s) to plot...\n")
+		}
+		else{
+			cat("Univariate density plot is provided...\n")
+			Manly.density(X, var = var1, model = model, x.slice = x.slice, x.mar = x.mar, col = col, ...)
+		}
+	}
+	else{
+		cat("Bivariate contour plot is provided...\n")
+		Manly.contour(X, var1 = var1, var2 = var2, model = model, x.slice = x.slice, y.slice = y.slice, x.mar = x.mar, y.mar = y.mar, col = col, ...)
+	}
+}
+
+Manly.density <- function(X, var = 1, model = NULL, x.slice = 100, x.mar = 1, col = "lightgrey", ...){	
+	if(!is.matrix(X)){
+		if(is.vector(X)){
+			n <- length(X)
+			X <- matrix(X, n, 1)
+		}
+	}
+	n <- dim(X)[1]
+	K <- length(model$tau)
+	hist(X[,var], freq = FALSE, ...)
+	x.seq <- seq(min(X[,var]) - x.mar, max(X[,var]) + x.mar, length = x.slice)	
+	z <- rep(0, length(x.seq))
+
+	for (i in 1:length(x.seq)){
+		z[i] <- Manly.mix(x.seq[i], la = matrix(model$la[,var], K, 1), tau = model$tau, Mu = matrix(model$Mu[,var], K, 1), S = array(model$S[var,var,], dim = c(1,1,K)))
+	}	
+	points(x.seq, z, type = "l", col = "lightgrey")
+	box()
 
 
+}
 
 Manly.contour <- function(X, var1 = 1, var2 = 2, model = NULL, x.slice = 100, y.slice = 100, x.mar = 1, y.mar = 1, col = "lightgrey", ...){
 	n <- dim(X)[1]
@@ -84,6 +120,7 @@ Manly.mix <- function(X, la = NULL, tau = NULL, Mu = NULL, S = NULL){
 	if(K < 1) stop("Wrong number of mixture components K...\n")
 	if ((K != equal.K[1]) || (K != equal.K[2]) || (K != equal.K[3])) stop("Inconsistent number of mixture components K...\n")
 	if ((p != equal.p[1]) || (p != equal.p[2]) || (p != equal.p[3]) || (p != equal.p[4])) stop("Inconsistent number of dimensionaltiy p...\n")
+
 
 
 	x1 <- as.vector(t(X))
@@ -291,13 +328,14 @@ overlap.M2 <- function(N, tau, Mu, S, la){
 	b.eig <- eigen(S[,,2])
 	b.sqrt <- b.eig$vectors %*% diag(sqrt(b.eig$values)) %*% solve(b.eig$vectors)
 
+	options(warn=-1)
 	Omega12 <- sum(apply(simu, 1, prop.M, tau1 = tau[1], tau2 = tau[2], mu1 = Mu[1,], mu2 = 
 	Mu[2,], S1 = S[,,1], S2 = S[,,2], la1 = la[1,], la2 = la[2,], sqr.S1 = 
-	a.sqrt, inv.S1 = inv.S1, inv.S2 = inv.S2, det.S1 = det.S1, det.S2 = det.S2)) / N
+	a.sqrt, inv.S1 = inv.S1, inv.S2 = inv.S2, det.S1 = det.S1, det.S2 = det.S2), na.rm = TRUE) / N
 
 	Omega21 <- sum(apply(simu, 1, prop.M, tau1 = tau[2], tau2 = tau[1], mu1 = Mu[2,], mu2 = 
 	Mu[1,], S1 = S[,,2], S2 = S[,,1], la1 = la[2,], la2 = la[1,], sqr.S1 = 
-	b.sqrt, inv.S1 = inv.S2, inv.S2 = inv.S1, det.S1 = det.S2, det.S2 = det.S1)) / N
+	b.sqrt, inv.S1 = inv.S2, inv.S2 = inv.S1, det.S1 = det.S2, det.S2 = det.S1), na.rm = TRUE) / N
 	return(list(Omega12 = Omega12, Omega21 = Omega21))
 }
 
@@ -307,19 +345,92 @@ Manly.overlap <- function(tau, Mu, S, la, N = 1000){
 	p <- length(tau)
 	K <- dim(Mu)[1]
 	mat <- combn(1:K, 2)
-	OmegaMap <- matrix(1, K, K)
-	Omega <- rep(NA, dim(mat)[2])
-
+	OmegaMap <- matrix(0, K, K)
+	Components <- NULL
+	Overlap <- rep(NA, dim(mat)[2])
+	OverlapMap <- matrix(NA, 3, dim(mat)[2])
 
 	for(i in 1:dim(mat)[2]){
 		whichtwo <- mat[,i]
 		result <- overlap.M2(N, tau = tau[whichtwo], Mu = Mu[whichtwo,], S = S[,,whichtwo], la = la[whichtwo,])
 		OmegaMap[whichtwo[1], whichtwo[2]] <- result$Omega12
 		OmegaMap[whichtwo[2], whichtwo[1]] <- result$Omega21
-		Omega[i] <- result$Omega12 + result$Omega21
-	}
+		Overlap[i] <- result$Omega12 + result$Omega21
+		Components <- c(Components, paste("(", mat[1,i], ", ", mat[2,i], ")", sep=""))
 
-	BarOmega <- mean(Omega)
-	MaxOmega <- max(Omega)
-	return(list(OmegaMap = OmegaMap, BarOmega = BarOmega, MaxOmega = MaxOmega))
+		
+	}
+	OverlapMap <- data.frame(Components, Overlap)
+
+	for(k in 1:K){
+		OmegaMap[k, k] <- 1-sum(OmegaMap[k,])
+	}
+	
+
+	BarOmega <- mean(Overlap)
+	MaxOmega <- max(Overlap)
+	return(list(OmegaMap = OmegaMap, OverlapMap = OverlapMap, BarOmega = BarOmega, MaxOmega = MaxOmega))
+
 }
+
+
+
+
+
+
+ClassAgree <- function(est.id, trueid){
+	if (length(est.id) != length(est.id)){
+		stop("Lengths of the estimated id and true id do not match...\n")
+	}
+	n <- length(est.id)
+	A <- as.factor(est.id)
+	B <- as.factor(trueid)
+	K1 <- nlevels(A)
+	K2 <- nlevels(B)
+	if(K1 < K2){
+		combination <- rep(0, K2)
+	}
+	else{
+		combination <- rep(0, K1)
+	}
+	for (i in 1:K1){
+		ind <- A == levels(A)[i]
+		est.id[ind] <- i 
+	}
+	for (i in 1:K2) {
+        	ind <- B == levels(B)[i]
+       		trueid[ind] <- i 
+    	}
+
+
+	if (min(K1, K2) == 1) {
+
+		ClassificationTable <- table(trueid, est.id)
+		MisclassificationNum <- n - max(ClassificationTable)
+		
+	}
+	else{
+		
+		Q <- .C("runProAgree", n = as.integer(n), K1 = as.integer(K1), 
+        K2 = as.integer(K2), id1 = as.integer(est.id-1), id2 = as.integer(trueid-1), 
+        maxPro = as.double(0), combination = as.integer(combination), PACKAGE = "ManlyMix")
+		label <- Q$combination + 1
+
+		if(K1 < K2){
+			for(i in 1:n){
+				est.id[i] <- label[est.id[i]]
+			}
+		}
+		else{
+			for(i in 1:n){
+				trueid[i] <- label[trueid[i]]
+
+			}
+		}
+		MisclassificationNum <- (1- Q$maxPro) * n
+		ClassificationTable <- table(trueid, est.id)
+	}
+	
+	return(list(ClassificationTable = ClassificationTable, MisclassificationNum = MisclassificationNum))
+}
+

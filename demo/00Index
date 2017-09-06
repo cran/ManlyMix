@@ -5,10 +5,12 @@ ManlyKmeans2		ManlyMix	Manly K-means algorithm with initial parameters
 BackwardSelection	ManlyMix	Backward model selection
 ForwardSelection	ManlyMix	Forward model selection
 ContourPlot		ManlyMix	Constructing contour plot
+DensityPlot		ManlyMix	Constructing density plot
 DataSimulation		ManlyMix	Simulate Manly mixture data
 Overlap			ManlyMix	Estimates average overlap for Manly mixture
 VarAssess		ManlyMix	Variability assessment
 utility			ManlyMix	Illustrative example
+acidity			ManlyMix	Application to acidity dataset
 ais			ManlyMix	Application to ais dataset
 seeds			ManlyMix 	Application to seeds dataset
 bankruptcy		ManlyMix	Application to bankruptcy dataset

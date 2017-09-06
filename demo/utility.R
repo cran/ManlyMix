@@ -31,27 +31,27 @@ set.seed(1)
 #run the traditional K-means algorithm
 M.K <- kmeans(X, K, nstart = 100)
 id.km <- M.K$cluster
-table(id, id.km)
+ClassAgree(id.km, id)
 
 #run the Manly K-means algorithm
 M.MK <- Manly.Kmeans(X, id.km, la = matrix(0.1, K, p))
-table(id, M.MK$id)
+ClassAgree(M.MK$id, id)
 
 #run Gaussian mixture model
 M.Gauss <- Manly.EM(X, id.km, la = matrix(0, K, p))
-table(id, M.Gauss$id)
+ClassAgree(M.Gauss$id, id)
 
 #run the EM algorithm
 M.EM <- Manly.EM(X, id.km, la = matrix(0.1, K, p))
-table(id, M.EM$id)
+ClassAgree(M.EM$id, id)
 
 #run the forward selection
 M.F <- Manly.select(X, M.Gauss, method = "forward", silent = TRUE)
-table(id, M.F$id)
+ClassAgree(M.F$id, id)
 
 #run the backward algorithm
 M.B <- Manly.select(X, M.EM, method = "backward", silent = TRUE)
-table(id, M.B$id)
+ClassAgree(M.B$id, id)
 
 
 
@@ -64,7 +64,7 @@ M.K$S <- array(0, dim = c(p,p,K))
 for(k in 1:K){
 	diag(M.K$S[,,k]) <- M.K$tot.withinss / n / p
 }
-Manly.contour(X, model = M.K, x.mar = 0.5, y.mar = 1.2, xaxs="i", yaxs="i", xaxt="n", yaxt="n", xlab="", ylab = "", nlevels = 10, drawlabels = FALSE, lwd = 3.2, col = "lightgrey", pch = 19)
+Manly.plot(X, var1 = 1, var2 = 2, model = M.K, x.mar = 0.5, y.mar = 1.2, xaxs="i", yaxs="i", xaxt="n", yaxt="n", xlab="", ylab = "", nlevels = 10, drawlabels = FALSE, lwd = 3.2, col = "lightgrey", pch = 19)
 
 
 M.MK$tau <- rep(1/K, K)
@@ -73,13 +73,13 @@ for(k in 1:K){
 	diag(S[,,k]) <- M.MK$S[k]
 }
 M.MK$S <- S
-Manly.contour(X, model = M.MK, x.mar = 0.5, y.mar = 1.2, xaxs="i", yaxs="i", xaxt="n", yaxt="n", xlab="", ylab = "", nlevels = 30, drawlabels = FALSE, lwd = 3.2, col = "lightgrey", pch = 19)
+Manly.plot(X, var1 = 1, var2 = 2, model = M.MK, x.mar = 0.5, y.mar = 1.2, xaxs="i", yaxs="i", xaxt="n", yaxt="n", xlab="", ylab = "", nlevels = 30, drawlabels = FALSE, lwd = 3.2, col = "lightgrey", pch = 19)
 
-Manly.contour(X, model = M.Gauss, x.mar = 0.5, y.mar = 1.2, xaxs="i", yaxs="i", xaxt="n", yaxt="n", xlab="", ylab = "", nlevels = 30, drawlabels = FALSE, lwd = 3.2, col = "lightgrey", pch = 19)
+Manly.plot(X, var1 = 1, var2 = 2, model = M.Gauss, x.mar = 0.5, y.mar = 1.2, xaxs="i", yaxs="i", xaxt="n", yaxt="n", xlab="", ylab = "", nlevels = 30, drawlabels = FALSE, lwd = 3.2, col = "lightgrey", pch = 19)
 
-Manly.contour(X, model = M.EM, x.mar = 0.5, y.mar = 1.2, xaxs="i", yaxs="i", xaxt="n", yaxt="n", xlab="", ylab = "", nlevels = 30, drawlabels = FALSE, lwd = 3.2, col = "lightgrey", pch = 19)
+Manly.plot(X, var1 = 1, var2 = 2, model = M.EM, x.mar = 0.5, y.mar = 1.2, xaxs="i", yaxs="i", xaxt="n", yaxt="n", xlab="", ylab = "", nlevels = 30, drawlabels = FALSE, lwd = 3.2, col = "lightgrey", pch = 19)
 
-Manly.contour(X, model = M.F, x.mar = 0.5, y.mar = 1.2, xaxs="i", yaxs="i", xaxt="n", yaxt="n", xlab="", ylab = "", nlevels = 30, drawlabels = FALSE, lwd = 3.2, col = "lightgrey", pch = 19)
+Manly.plot(X, var1 = 1, var2 = 2, model = M.F, x.mar = 0.5, y.mar = 1.2, xaxs="i", yaxs="i", xaxt="n", yaxt="n", xlab="", ylab = "", nlevels = 30, drawlabels = FALSE, lwd = 3.2, col = "lightgrey", pch = 19)
 
-Manly.contour(X, model = M.B, x.mar = 0.5, y.mar = 1.2, xaxs="i", yaxs="i", xaxt="n", yaxt="n", xlab="", ylab = "", nlevels = 30, drawlabels = FALSE, lwd = 3.2, col = "lightgrey", pch = 19)
+Manly.plot(X, var1 = 1, var2 = 2, model = M.B, x.mar = 0.5, y.mar = 1.2, xaxs="i", yaxs="i", xaxt="n", yaxt="n", xlab="", ylab = "", nlevels = 30, drawlabels = FALSE, lwd = 3.2, col = "lightgrey", pch = 19)
 

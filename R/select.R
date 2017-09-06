@@ -1,5 +1,12 @@
 
-forward <- function(X, reduced, tol, max.iter){
+forward <- function(X, reduced, tol, max.iter){
+	if(!is.matrix(X)){
+		if(is.vector(X)){
+			n <- length(X)
+			X <- matrix(X, n, 1)
+		}
+	}
+
 	K <- dim(reduced$Mu)[1]
 	p <- dim(reduced$Mu)[2]
 	n <- dim(X)[1]
@@ -62,6 +69,13 @@ forward <- function(X, reduced, tol, max.iter){
 
 
 backward <- function(X, full, tol, max.iter){
+	if(!is.matrix(X)){
+		if(is.vector(X)){
+			n <- length(X)
+			X <- matrix(X, n, 1)
+		}
+	}
+
 	K <- dim(full$Mu)[1]
 	p <- dim(full$Mu)[2]
 	n <- dim(X)[1]

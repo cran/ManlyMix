@@ -13,25 +13,25 @@ K <- max(id)
 #run the traditional K-means algorithm
 M.K <- kmeans(X, K)
 id.km <- M.K$cluster
-table(id, id.km)
+ClassAgree(id.km, id)
 
 #run the Manly K-means algorithm
 M.MK <- Manly.Kmeans(X, id = id.km, la = matrix(0.1, K, p))
-table(id, M.MK$id)
+ClassAgree(M.MK$id, id)
 
 #run Gaussian mixture model
 M.Gauss <- Manly.EM(X, id = id.km, la = matrix(0, K, p))
-table(id, M.Gauss$id)
+ClassAgree(M.Gauss$id, id)
 
 #run the EM algorithm
 M.EM <- Manly.EM(X, id = id.km, la = matrix(0.1, K, p))
-table(id, M.EM$id)
+ClassAgree(M.EM$id, id)
 
 #run the forward selection
 M.F <- Manly.select(X, M.Gauss, method = "forward", silent = TRUE)
-table(id, M.F$id)
+ClassAgree(M.F$id, id)
 
 #run the backward algorithm
 M.B <- Manly.select(X, M.EM, method = "backward", silent = TRUE)
-table(id, M.B$id)
+ClassAgree(M.B$id, id)
 

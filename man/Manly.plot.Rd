@@ -1,30 +1,29 @@
-\name{Manly.contour}
-\alias{Manly.contour}
+\name{Manly.plot}
+\alias{Manly.plot}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{ Contour plot for Manly mixture model }
+\title{ Density plot or contour plot for Manly mixture model }
 \description{
-Provides a contour plot for the fitted data with Manly mixture model.
+Provides a contour plot or a density plot for the fitted data with Manly mixture model.
 }
 \usage{
-Manly.contour(X, var1 = 1, var2 = 2, model = NULL, x.slice = 100, 
+Manly.plot(X, var1 = NULL, var2 = NULL, model = NULL, x.slice = 100, 
 y.slice = 100, x.mar = 1, y.mar = 1, col = "lightgrey", ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{X }{ dataset matrix (n x p)}
-  \item{var1 }{ x-axis variable}
-  \item{var2 }{ y-axis variable}
+  \item{var1 }{ x-axis variable for contour plot or variable for density plot}
+  \item{var2 }{ y-axis variable for contour plot}
   \item{model }{ fitted Manly mixture model}
   \item{x.slice }{ number of slices in the first variable sequence in the contour}
   \item{y.slice }{ number of slices in the second variable sequence in the contour}
   \item{x.mar }{ value to be subtracted/added to the smallest/largest observation in the x-axis}
   \item{y.mar }{ value to be subtracted/added to the smallest/largest observation in the y-axis}
   \item{col }{ color of the contour lines}
-  \item{...}{further arguments related to \code{\link{contour}}}
+  \item{...}{further arguments related to \code{\link{contour}} and \code{\link{hist}}}
 }
 \details{
-Provides the contour plot for the fitted data by Manly mixture model. This plot is designed for two-dimensional data. 
-}
+Provides the contour plot or density plot for the fitted data by Manly mixture model. }
 
 \seealso{Manly.EM}
 
@@ -42,7 +41,7 @@ id.km <- kmeans(X, K)$cluster
 la <- matrix(0.1, K, p)
 B <- Manly.EM(X, id.km, la)
 
-Manly.contour(X, model = B, x.mar = 1, y.mar = 2,
+Manly.plot(X, model = B, var1 = 1, x.mar = 1, y.mar = 2,
 xaxs="i", yaxs="i", xaxt="n", yaxt="n", xlab="", 
 ylab = "", nlevels = 10, drawlabels = FALSE, 
 lwd = 3.2, col = "lightgrey", pch = 19)

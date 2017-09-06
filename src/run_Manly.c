@@ -6,6 +6,26 @@
 
 
 
+void runProAgree(int (*n), int (*K1), int (*K2), int *id1, int *id2, double (*maxPro), int * combination){
+
+	double maxPro1;
+
+	int n1, K11, K21;
+
+	n1 = (*n);
+	K11 = (*K1);
+	K21 = (*K2);		
+
+	maxPro1 = (*maxPro);
+	
+	proAgree(n1, K11, K21, id1, id2, &maxPro1, combination);
+
+	(*maxPro) = maxPro1;
+
+}
+
+
+
 
 void run_Manly_transX(double *x1, int *misc_int, double *la1, double *y1){
 

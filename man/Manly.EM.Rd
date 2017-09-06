@@ -55,14 +55,14 @@ id.km <- kmeans(X, K)$cluster
 A <- Manly.EM(X, id.km)
 id.Gauss <- A$id
 
-table(id.true, id.Gauss)
+ClassAgree(id.Gauss, id.true)
 
 # Run the EM algorithm for a Manly mixture model based on Gaussian mixture solution
 la <- matrix(0.1, K, p)
 B <- Manly.EM(X, id.Gauss, la)
 id.Manly <- B$id
 
-table(id.true, id.Manly)
+ClassAgree(id.Manly, id.true)
 
 }
 

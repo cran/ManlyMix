@@ -26,4 +26,4 @@ data(bankruptcy)
 
 }
 
-\keyword{data sets}
+\keyword{datasets}
