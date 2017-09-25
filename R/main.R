@@ -219,6 +219,8 @@ Manly.EM <- function(X, id = NULL, la = NULL, tau = NULL, Mu = NULL, S = NULL, t
 
 	}
 
+
+
 	ind <- result$la1==0
 	
 	M <- K - 1 + 2 * K * p + K * p * (p + 1) / 2 - sum(ind)

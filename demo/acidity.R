@@ -41,8 +41,10 @@ for(k in 1:K){
 	M.K$S[,,k] <- M.K$tot.withinss / n / p
 }
 
-Manly.plot(X= acidity, model = M.K, var1 = 1, main = "", ylim = c(0, 0.75), xlab = "", xaxt = "n", ylab = "", yaxt = "n", x.slice = 200)
+Manly.plot(X= acidity, model = M.K, var1 = 1, main = "", ylim = c(0, 0.75), xlab = "", xaxt = "n", ylab = "", yaxt = "n", x.slice = 200, col = "red")
 
+dev.copy2pdf(file = "/Users/zhu/Desktop/Xuwen/R_journal3/Figures/acidity_Kmeans.pdf")
+dev.copy2eps(file = "/Users/zhu/Desktop/Xuwen/R_journal3/Figures/acidity_Kmeans.eps")
 
 
 M.MK$tau <- rep(1/K, K)
@@ -52,16 +54,29 @@ for(k in 1:K){
 }
 M.MK$S <- S
 
-Manly.plot(X= acidity, model = M.MK, var1 = 1, main = "", ylim = c(0, 0.75), xlab = "", xaxt = "n", ylab = "", yaxt = "n", x.slice = 200)
+Manly.plot(X= acidity, model = M.MK, var1 = 1, main = "", ylim = c(0, 0.75), xlab = "", xaxt = "n", ylab = "", yaxt = "n", x.slice = 200, col = "red")
+
+dev.copy2pdf(file = "/Users/zhu/Desktop/Xuwen/R_journal3/Figures/acidity_ManlyKmeans.pdf")
+dev.copy2eps(file = "/Users/zhu/Desktop/Xuwen/R_journal3/Figures/acidity_ManlyKmeans.eps")
+
+Manly.plot(X= acidity, model = M.Gauss, var1 = 1, main = "", ylim = c(0, 0.75), xlab = "", xaxt = "n", ylab = "", yaxt = "n", x.slice = 200, col = "red")
+
+dev.copy2pdf(file = "/Users/zhu/Desktop/Xuwen/R_journal3/Figures/acidity_Gaussian.pdf")
+dev.copy2eps(file = "/Users/zhu/Desktop/Xuwen/R_journal3/Figures/acidity_Gaussian.eps")
 
 
-Manly.plot(X= acidity, model = M.Gauss, var1 = 1, main = "", ylim = c(0, 0.75), xlab = "", xaxt = "n", ylab = "", yaxt = "n", x.slice = 200)
+Manly.plot(X= acidity, model = M.EM, var1 = 1, main = "", ylim = c(0, 0.75), xlab = "", xaxt = "n", ylab = "", yaxt = "n", x.slice = 200, col = "red")
+dev.copy2pdf(file = "/Users/zhu/Desktop/Xuwen/R_journal3/Figures/acidity_Manly.pdf")
+dev.copy2eps(file = "/Users/zhu/Desktop/Xuwen/R_journal3/Figures/acidity_Manly.eps")
 
 
-Manly.plot(X= acidity, model = M.EM, var1 = 1, main = "", ylim = c(0, 0.75), xlab = "", xaxt = "n", ylab = "", yaxt = "n", x.slice = 200)
+Manly.plot(X= acidity, model = M.F, var1 = 1, main = "", ylim = c(0, 0.75), xlab = "", xaxt = "n", ylab = "", yaxt = "n", x.slice = 200, col = "red")
 
+dev.copy2pdf(file = "/Users/zhu/Desktop/Xuwen/R_journal3/Figures/acidity_ManlyF.pdf")
 
-Manly.plot(X= acidity, model = M.F, var1 = 1, main = "", ylim = c(0, 0.75), xlab = "", xaxt = "n", ylab = "", yaxt = "n", x.slice = 200)
+dev.copy2eps(file = "/Users/zhu/Desktop/Xuwen/R_journal3/Figures/acidity_ManlyF.eps")
 
-Manly.plot(X= acidity, model = M.B, var1 = 1, main = "", ylim = c(0, 0.75), xlab = "", xaxt = "n", ylab = "", yaxt = "n", x.slice = 200)
+Manly.plot(X= acidity, model = M.B, var1 = 1, main = "", ylim = c(0, 0.75), xlab = "", xaxt = "n", ylab = "", yaxt = "n", x.slice = 200, col = "red")
+dev.copy2pdf(file = "/Users/zhu/Desktop/Xuwen/R_journal3/Figures/acidity_ManlyB.pdf")
+dev.copy2eps(file = "/Users/zhu/Desktop/Xuwen/R_journal3/Figures/acidity_ManlyB.eps")
 

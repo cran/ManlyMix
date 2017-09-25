@@ -10,31 +10,6 @@ p <- dim(X)[2]
 K <- max(id) 
 
 
-
-ll <- -Inf
-M <- NULL
-nstart <- 100
-iter <- 0
-repeat{
-
-	id.km <- kmeans(X, centers = K, iter.max = 1)$cluster
-	init <- Manly.EM(X, id = id.km, la = matrix(0.1, K, p), max.iter = 5)
-	temp <- Manly.EM(X, tau = init$tau, Mu = init$Mu, S = init$S, la = init$la)
-	if(temp$ll > ll){
-		ll <- temp$ll
-		M <- temp
-	}
-	iter <- iter + 1
-	if(iter == nstart){break}
-}
-
-
-
-
-
-
-
-
 #run the traditional K-means algorithm
 M.K <- kmeans(X, K)
 id.km <- M.K$cluster

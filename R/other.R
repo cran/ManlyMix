@@ -66,7 +66,7 @@ Manly.density <- function(X, var = 1, model = NULL, x.slice = 100, x.mar = 1, co
 	for (i in 1:length(x.seq)){
 		z[i] <- Manly.mix(x.seq[i], la = matrix(model$la[,var], K, 1), tau = model$tau, Mu = matrix(model$Mu[,var], K, 1), S = array(model$S[var,var,], dim = c(1,1,K)))
 	}	
-	points(x.seq, z, type = "l", col = "lightgrey")
+	points(x.seq, z, type = "l", col = col, ...)
 	box()
 
 

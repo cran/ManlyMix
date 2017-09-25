@@ -1,9 +1,9 @@
-691500e5483b03a45a2561592acbd7da *DESCRIPTION
+098fefe5a89f7b31c35807e0a953be56 *DESCRIPTION
 75daae24f00e37686e13b0ca693a9220 *NAMESPACE
-f9b2d75e7a857c251c17549809ebac9a *NEWS
+8b95f380849d11488f0704f1dbc90ef7 *NEWS
 0ce63310c0f7b7db815bf790459bae6d *R/Kmeans.R
-5523f231ea91729cacf7c7ae1dbbda26 *R/main.R
-014bfd985f85f835699b21dfdf1e6dbd *R/other.R
+8441fd15ebe9bcf070556163e38aa1da *R/main.R
+b9689caf88fb5c7c04983ff1da49dc4c *R/other.R
 c167dc44e886dffc6d26b86520508966 *R/select.R
 8f868159c0d7b1c813057f9f89db3b4e *R/zzz.R
 122c912d85efb097a912039b39c72d87 *data/acidity.rda
@@ -22,8 +22,8 @@ eb18afeffa5c674d72e890776e1f8d8a *demo/ForwardSelection.R
 9fabee64904ff3d61deee2212995747e *demo/ManlyKmeans2.R
 c0fc72c28c133700d4c7dd07ecbee8d9 *demo/Overlap.R
 b4c1cadc963c7e08e1dedafa7522bc04 *demo/VarAssess.R
-db4bb0b2ae66a1f79845b6fd87fb5172 *demo/acidity.R
-57ee843c2fa0cb925479ccd226743272 *demo/ais.R
+8da6e50f4975fb15302043fa86006226 *demo/acidity.R
+e42db4afd661b29023a3483cf79e4ff2 *demo/ais.R
 ab0fac885e7d7f4ad1e7c1abbb7022d8 *demo/bankruptcy.R
 e8833f4d54287275366a5d77b4013b76 *demo/seeds.R
 dff069cd959f7cb7d3cce78f8721620d *demo/utility.R
