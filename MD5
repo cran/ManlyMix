@@ -1,8 +1,8 @@
-11386576b4e98294a5f67a0f160e89e8 *DESCRIPTION
+3bafe2e663917c0d732071a4ef8aa47b *DESCRIPTION
 143c07af8c5e16aa15a707060533d8fa *NAMESPACE
-8b95f380849d11488f0704f1dbc90ef7 *NEWS
+d8fa30aca2601f55fffa3c05b1c5a080 *NEWS
 0ce63310c0f7b7db815bf790459bae6d *R/Kmeans.R
-8441fd15ebe9bcf070556163e38aa1da *R/main.R
+94011edf1d9b1c23644673a324ee4690 *R/main.R
 5718514f52c4253bbc89df3ca15a78b1 *R/other.R
 c167dc44e886dffc6d26b86520508966 *R/select.R
 8f868159c0d7b1c813057f9f89db3b4e *R/zzz.R
@@ -31,7 +31,7 @@ dff069cd959f7cb7d3cce78f8721620d *demo/utility.R
 dc4a8fdc5941077b94c0540dfe9d1c68 *man/ClassAgree.Rd
 c8d1a3652df92a1cf2caa737f176c992 *man/Manly.EM.Rd
 b58f2608b822df3af356891acb87dccd *man/Manly.Kmeans.Rd
-9c06d1c6051c7ed0fa482151ecb03fbd *man/Manly.model.Rd
+ef919608a498e531d1f13a79e53587ff *man/Manly.model.Rd
 39a815a735e92cd231b29f06b4cd65a7 *man/Manly.overlap.Rd
 7aae5744c0ae5cf8ac6791a24da32ce3 *man/Manly.plot.Rd
 4c8dc1f2259a6589e531e7fe3dad1b83 *man/Manly.select.Rd

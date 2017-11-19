@@ -9,7 +9,7 @@ Runs all the functionality of a Manly mixture model.
 Manly.model(X, K = 1:5, Gaussian = FALSE, initial = "k-means", 
 nstart = 100, method = "ward.D",  short.iter = 5, 
 select = "none", silent = TRUE, plot = FALSE, var1 = NULL, 
-var2 = NULL, VarAssess = FALSE, overlap = FALSE, N = 1000, 
+var2 = NULL, VarAssess = FALSE, conf.CI = NULL, overlap = FALSE, N = 1000, 
 tol = 1e-5, max.iter = 1000, ...)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -27,6 +27,7 @@ tol = 1e-5, max.iter = 1000, ...)
   \item{var1 }{ x-axis variable for contour plot or variable for density plot}
   \item{var2 }{ y-axis variable for contour plot}
   \item{VarAssess }{ run the variability assessment of the Manly mixture model or not}
+  \item{conf.CI }{ specify the confidence level of parameter estimates}
   \item{overlap }{ estimate the overlap of Manly mixture components or not}
   \item{N }{ number of Monte Carlo simulations to run in the Manly.overlap function}  
   \item{tol }{ tolerance level}

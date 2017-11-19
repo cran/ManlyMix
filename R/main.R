@@ -1,5 +1,5 @@
 options(warn=-1)
-Manly.model <- function(X, K = 1:5, Gaussian = FALSE, initial = "k-means", nstart = 100, method = "ward.D", short.iter = 5, select = "none", silent = TRUE, plot = FALSE, var1 = NULL, var2 = NULL, VarAssess = FALSE, overlap = FALSE, N = 1000, tol = 1e-5, max.iter = 1000, ...){
+Manly.model <- function(X, K = 1:5, Gaussian = FALSE, initial = "k-means", nstart = 100, method = "ward.D", short.iter = 5, select = "none", silent = TRUE, plot = FALSE, var1 = NULL, var2 = NULL, VarAssess = FALSE, conf.CI = NULL, overlap = FALSE, N = 1000, tol = 1e-5, max.iter = 1000, ...){
 	if(!is.matrix(X)){
 		if(is.vector(X)){
 			n <- length(X)
@@ -112,7 +112,7 @@ Manly.model <- function(X, K = 1:5, Gaussian = FALSE, initial = "k-means", nstar
 	}
 	if(!Gaussian){
 		if(VarAssess){
-			VAR <- Manly.var(X, model = M)
+			VAR <- Manly.var(X, model = M, conf.CI = conf.CI)
 		}
 	}
 
