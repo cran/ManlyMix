@@ -1,6 +1,6 @@
 useDynLib(ManlyMix, .registration = TRUE)
 importFrom("graphics", "contour", "points", "hist", "box")
-importFrom("stats", "rmultinom", "rnorm", "hclust", "kmeans", "cutree", "dist")
+importFrom("stats", "rmultinom", "rnorm", "hclust", "kmeans", "cutree", "dist", "qnorm")
 importFrom("utils", "combn")
 export(Manly.EM)
 export(Manly.select)

@@ -143,7 +143,7 @@ Manly.mix <- function(X, la = NULL, tau = NULL, Mu = NULL, S = NULL){
 
 
 
-Manly.var <- function(X, model = NULL){
+Manly.var <- function(X, model = NULL, conf.CI = NULL){
 
 	n <- dim(X)[1]
 	p <- dim(X)[2]
@@ -233,7 +233,24 @@ Manly.var <- function(X, model = NULL){
 
 	V <- solve(Inf.mat)
 
-	return(V)
+	if(!is.null(conf.CI)){
+
+		if((conf.CI >1) || (conf.CI <=0)) stop("The confidence level has to be in between 0 and 1...\n")
+		st.err <- sqrt(diag(V))
+		Estimates <- c(model$tau[-K], as.vector(t(model$Mu)), unique(as.vector(model$S)), as.vector(t(model$la)))
+		quantile <- (1- conf.CI)/2 +conf.CI
+		
+		Lower <- Estimates - qnorm(quantile) * st.err
+		Upper <- Estimates + qnorm(quantile) * st.err
+		CI <- cbind(Estimates, Lower, Upper)
+	
+	}
+	else{
+		CI <- NULL
+
+	}
+
+	return(list(V = V, CI = CI))
 }
 
 

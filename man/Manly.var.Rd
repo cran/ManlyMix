@@ -6,15 +6,20 @@
 Runs the variability assessment for a Manly mixture model.
 }
 \usage{
-Manly.var(X, model = NULL)
+Manly.var(X, model = NULL, conf.CI = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{X }{ dataset matrix (n x p)}
   \item{model }{ Manly mixture model}
+  \item{conf.CI }{ confidence level, say 95 percent confidence}
 }
 \details{
-Returns the estimated variance-covariance matrix for model parameter estimates.
+Returns the estimated variance-covariance matrix and confidence intervals for model parameter estimates.
+}
+\value{
+  \item{V}{variance-covariance matrix.}
+  \item{CI}{confidence intervals for each parameter.}
 }
 
 \seealso{Manly.EM}
@@ -36,7 +41,7 @@ la <- matrix(0.1, K, p)
 M.EM <- Manly.EM(X, id.km, la)
      
 # Run the variability assessment
-Manly.var(X, M.EM)
+Manly.var(X, M.EM, conf.CI = 0.95)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
