@@ -128,6 +128,7 @@ double Qk(int n, int p, double *la, double **X){
 double M_stepk(int n, int p, int K, double *misc_double, double **X, int *id, double **la, double **Mu, double *sigma2){
   
 	int i, j, k;
+	int sum_index, *index_la;
 	int *index, *sum_id;
 	double 	eps, *Q_value, Q_value0=0, min;
 	double **Y, **Z;
@@ -135,7 +136,7 @@ double M_stepk(int n, int p, int K, double *misc_double, double **X, int *id, do
 	MAKE_VECTOR(sum_id, K);
 	MAKE_VECTOR(index, n);
 	MAKE_VECTOR(Q_value, K);
-
+	MAKE_VECTOR(index_la, p);
 
 	Anull(Mu, K, p);
 	anull(sigma2, K);
@@ -162,13 +163,26 @@ double M_stepk(int n, int p, int K, double *misc_double, double **X, int *id, do
 		MAKE_MATRIX(Y, sum_id[k], p);
 
 		extract(n, p, X, index, Z);
+	
+		sum_index = 0;
+
+		for(j=0; j<p; j++){
+			index_la[j] = (la[k][j] != 0.0);
+			sum_index += index_la[j];
+		}
+		if(sum_index > 0){
+	
+			min = simplexk(Qk, sum_id[k], p, la[k], Z, eps, 0.1);
+
+			Q_value[k] = min;
+
+		}
+		else{
+			
+			Q_value[k] = Qk(sum_id[k], p, la[k], Z);
+
+		}
 		
-		min = simplexk(Qk, sum_id[k], p, la[k], Z, eps, 0.1);
-
-
-		Q_value[k] = min;
-
-
 		Manly_transX(sum_id[k], p, la[k], Z, Y);
 
 		FREE_MATRIX(Z);
@@ -205,6 +219,7 @@ double M_stepk(int n, int p, int K, double *misc_double, double **X, int *id, do
 	FREE_VECTOR(sum_id);
 	FREE_VECTOR(index);
 	FREE_VECTOR(Q_value);
+	FREE_VECTOR(index_la);
 	
 	return Q_value0;	
 

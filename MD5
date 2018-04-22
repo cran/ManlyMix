@@ -1,6 +1,6 @@
-3bafe2e663917c0d732071a4ef8aa47b *DESCRIPTION
+888d226f2d02f8b4f67126a86f1aa0f5 *DESCRIPTION
 143c07af8c5e16aa15a707060533d8fa *NAMESPACE
-d8fa30aca2601f55fffa3c05b1c5a080 *NEWS
+d7eba44aa289591750ee393e8a3629d1 *NEWS
 0ce63310c0f7b7db815bf790459bae6d *R/Kmeans.R
 94011edf1d9b1c23644673a324ee4690 *R/main.R
 5718514f52c4253bbc89df3ca15a78b1 *R/other.R
@@ -54,6 +54,6 @@ a34982fa892b7f7a258d1d3a39aa0bb9 *src/libCEigen.c
 1efb8946ee3347322a8dd66ac5fa5a4e *src/libManly.c
 41b73861490af6fbe6b50245444a74fd *src/libMatrix.c
 8399aa326f62604df435cea345869d1a *src/libRandC.c
-fd5a415629c239f476adff2fbdfd8b58 *src/liblambda.c
+558170b5e42fc8aa60635d7a49c481bd *src/liblambda.c
 7c22b1b500cab25872924e218f1645f5 *src/registerDynamicSymbol.c
 43748793755e3c686e4e7d87c9416301 *src/run_Manly.c
