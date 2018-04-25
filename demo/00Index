@@ -2,6 +2,7 @@ EMalgorithm1		ManlyMix	EM algorithm with initial membership vector
 EMalgorithm2		ManlyMix	EM algorithm with initial parameters
 ManlyKmeans1		ManlyMix	Manly K-means algorithm with initial membership vector
 ManlyKmeans2		ManlyMix	Manly K-means algorithm with initial parameters
+ManlyKmeans3		ManlyMix	Sigma K-means algorithm
 BackwardSelection	ManlyMix	Backward model selection
 ForwardSelection	ManlyMix	Forward model selection
 ContourPlot		ManlyMix	Constructing contour plot

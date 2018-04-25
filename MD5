@@ -1,6 +1,6 @@
-888d226f2d02f8b4f67126a86f1aa0f5 *DESCRIPTION
+3da3e7b68fc9b981ab05ae10eeb5e98c *DESCRIPTION
 143c07af8c5e16aa15a707060533d8fa *NAMESPACE
-d7eba44aa289591750ee393e8a3629d1 *NEWS
+319f1b83d40f2433cccc3627035a7d25 *NEWS
 0ce63310c0f7b7db815bf790459bae6d *R/Kmeans.R
 94011edf1d9b1c23644673a324ee4690 *R/main.R
 5718514f52c4253bbc89df3ca15a78b1 *R/other.R
@@ -10,7 +10,7 @@ c167dc44e886dffc6d26b86520508966 *R/select.R
 23a5db3f59c58dd6977e88310758a45a *data/ais.rda
 e83f2df7fbae06fef7c59776440173f1 *data/bankruptcy.rda
 aa4286d2bd873266504f157de09c7d70 *data/seeds.rda
-835af99bfc68dba9443f05b46136aaee *demo/00Index
+ce5eb8c2fedb0d4ef11e24096e450f63 *demo/00Index
 52aec9723b4979eba17f57e468a5b49e *demo/BackwardSelection.R
 a74c015c0d2174d0f5c130f73deb74a3 *demo/ContourPlot.R
 e1a852759704cff2126f2b819f21b104 *demo/DataSimulation.R
@@ -20,6 +20,7 @@ e1a852759704cff2126f2b819f21b104 *demo/DataSimulation.R
 eb18afeffa5c674d72e890776e1f8d8a *demo/ForwardSelection.R
 51c8ddf2907a183771b88edf166c256a *demo/ManlyKmeans1.R
 9fabee64904ff3d61deee2212995747e *demo/ManlyKmeans2.R
+89fa1917b1bb0b5cad1f92cd3819c649 *demo/ManlyKmeans3.R
 c0fc72c28c133700d4c7dd07ecbee8d9 *demo/Overlap.R
 4d3d89fd664d21fae34d1676457076de *demo/VarAssess.R
 8da6e50f4975fb15302043fa86006226 *demo/acidity.R
