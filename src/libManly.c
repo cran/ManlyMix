@@ -275,7 +275,7 @@ void Manly_dens(int n, int p, double **X, double *la, double *Mu, double **S, do
 		vec_(p, Y[i], Mu);
 		Res = vAvt(Y[i], p, Sinv);
 
-		dens[i] = exp(-Res / 2.0) / sqrt(pow((2*PI), p) * detS);
+		dens[i] = exp(-Res / 2.0) / sqrt(pow((M_2PI), p) * detS);
 		
 		c = 0;
 		for(j=0; j<p; j++){

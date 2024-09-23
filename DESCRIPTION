@@ -1,5 +1,5 @@
 Package: ManlyMix
-Version: 0.1.15
+Version: 0.1.15.1
 Date: 2023-04-27
 Title: Manly Mixture Modeling and Model-Based Clustering
 Authors@R: c(person("Xuwen", "Zhu", role = c("aut", "cre"),
@@ -16,7 +16,7 @@ LazyLoad: yes
 LazyData: no
 Description: The utility of this package includes finite mixture modeling and model-based clustering through Manly mixture models by Zhu and Melnykov (2016) <DOI:10.1016/j.csda.2016.01.015>. It also provides capabilities for forward and backward model selection procedures.  
 License: GPL (>= 2)
-Packaged: 2023-04-28 17:45:47 UTC; root
+Packaged: 2024-09-18 10:05:13 UTC; ripley
 Author: Xuwen Zhu [aut, cre],
   Volodymyr Melnykov [aut],
   Michael Hutt [ctb, cph] (NM optimization in c),
@@ -25,4 +25,4 @@ Author: Xuwen Zhu [aut, cre],
 Maintainer: Xuwen Zhu <xzhu20@cba.ua.edu>
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2023-04-29 06:40:02 UTC
+Date/Publication: 2024-09-23 11:15:38 UTC
